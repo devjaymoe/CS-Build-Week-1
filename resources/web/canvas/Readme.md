@@ -24,7 +24,6 @@ to get another frame as soon as possible.
 let prevTimestamp = null;
 
 function onAnimFrame(timestamp) {
-
     // Request another animation frame for the future
     requestAnimationFrame(onAnimFrame);
 
@@ -34,7 +33,7 @@ function onAnimFrame(timestamp) {
     }
 
     // Compute how long it took between frames
-    const elapsed = timestamp - prevTimestamp
+    const elapsed = timestamp - prevTimestamp;
 
     // Remember this for next frame
     prevTimestamp = timestamp;
@@ -51,25 +50,24 @@ requestAnimationFrame(onAnimFrame);
 We'll be using this to change the contents in the canvas within the React
 component.
 
-
 ### Canvas in the React Component
 
 Having a canvas in a react component is pretty easy:
 
 ```javascript
 const MyComponent = (props) => {
-    const canvasRef = useRef(null)
+    const canvasRef = useRef(null);
 
     // ...
 
     /**
      * Render the canvas
      */
-    
-    return <canvas ref={canvasRef} width={props.width} height={props.height} />
-    
+
+    return <canvas ref={canvasRef} width={props.width} height={props.height} />;
+
     // ...
-}
+};
 ```
 
 What's that weird `ref="canvas"` bit?
@@ -82,9 +80,8 @@ Inside the `requestAnimationFrame()` handler, you can refer to the canvas with:
 ```javascript
 const canvas = canvasRef.current; // refers to the ref attribute in render()
 
-const context = canvas.getContext('2d'); // etc.
+const context = canvas.getContext("2d"); // etc.
 ```
-
 
 ### Canvas in React with `requestAnimationFrame()`
 
@@ -97,61 +94,58 @@ Fortunately, in the [React component
 lifecycle](https://reactjs.org/docs/react-component.html)
 
 We may want to even use this in many spots of our application or in other
- applications. So let's create a custom hook for it.
+applications. So let's create a custom hook for it.
 
 We'll request an initial animation frame in the `useEffect()` hook,
 and we'll stop animating in the `cancelAnimation()` handler.
 
 All `useEffect()` needs to do is call `requestAnimationFrame()`. We will then
- create and pass a cancelAnimation function to the component.
+create and pass a cancelAnimation function to the component.
 `canelAnimation()` just needs to set a continueAnimation to false which will
- stop the recursion.
- 
+stop the recursion.
+
 ## Exercise
-### Create useAnimationCustomHook 
+
+### Create useAnimationCustomHook
+
 ```javascript
 import React, { useEffect, useState } from "react";
 
 // custom hook for using animation frame
-export const useAnimeFrame = ( timestamp, doAnimationCallBack ) => {
-  
-  // set the prev time stamp
-  const [ prevTimeStamp, setTimeStamp ] = useState( timestamp - 30 );
-  const [ continueAnimation, setContinueAnimation ] = useState( true );
-  const [ started, setStarted ] = useState( false );
-  
-  useEffect( () => {
-    
-    // only start the animation frame if we haven't in the past
-    if( !started ){
-      setStarted( true );
-      requestAnimationFrame( onFrame );
-    }
-  }, [ started ] );
-  
-  // Request the first animation frame to kick things off
-  const onFrame = ( timestamp ) => {
-    
-    // if we want to do more ask for the next frame
-    if( continueAnimation ){
-      requestAnimationFrame( onFrame );
-    }
-    const elapsed = prevTimeStamp - timestamp;
-    setTimeStamp( timestamp );
-    console.log( `Current time: ${ timestamp } ms, frame time: ${ elapsed } ms` );
-    
-    //call callback and pass it the elapsed time
-    doAnimationCallBack( elapsed );
-    
-  };
-  
-  // this wills stop the hook from calling the next animation frame
-  const cancelAnimation = () => {
-    setContinueAnimation( false );
-  };
-  
-  return [ cancelAnimation ];
-  
+export const useAnimeFrame = (timestamp, doAnimationCallBack) => {
+    // set the prev time stamp
+    const [prevTimeStamp, setTimeStamp] = useState(timestamp - 30);
+    const [continueAnimation, setContinueAnimation] = useState(true);
+    const [started, setStarted] = useState(false);
+
+    useEffect(() => {
+        // only start the animation frame if we haven't in the past
+        if (!started) {
+            setStarted(true);
+            requestAnimationFrame(onFrame);
+        }
+    }, [started]);
+
+    // Request the first animation frame to kick things off
+    const onFrame = (timestamp) => {
+        // if we want to do more ask for the next frame
+        if (continueAnimation) {
+            requestAnimationFrame(onFrame);
+        }
+        const elapsed = prevTimeStamp - timestamp;
+        setTimeStamp(timestamp);
+        console.log(`Current time: ${timestamp} ms, frame time: ${elapsed} ms`);
+
+        //call callback and pass it the elapsed time
+        doAnimationCallBack(elapsed);
+    };
+
+    // this wills stop the hook from calling the next animation frame
+    const cancelAnimation = () => {
+        setContinueAnimation(false);
+    };
+
+    return [cancelAnimation];
 };
 ```
 
@@ -164,24 +158,22 @@ import React, { useRef, useState } from "react";
 import { useAnimeFrame } from "../customHooks/useAnimeFrame.js";
 import moment from "moment";
 
-const MyComponent = ( props ) => {
-  
-  const canvasRef = useRef( null );
-  
-  const [ stopAnimation, setStopAnimation ] = useState( false );
-  
-  const doAnimation = ( elapsedTime ) => {
-    console.log( "elapsed time:", elapsedTime );
-    console.log( canvasRef.current );
-  };
-  
-  const [ cancelAnimationFrame ] = useAnimeFrame( moment.now(), doAnimation );
-  
-  /**
-   * Render the canvas
-   */
-  return ( <canvas ref={ canvasRef } width={ props.width }
-                   height={ props.height }/> );
+const MyComponent = (props) => {
+    const canvasRef = useRef(null);
+
+    const [stopAnimation, setStopAnimation] = useState(false);
+
+    const doAnimation = (elapsedTime) => {
+        console.log("elapsed time:", elapsedTime);
+        console.log(canvasRef.current);
+    };
+
+    const [cancelAnimationFrame] = useAnimeFrame(moment.now(), doAnimation);
+
+    /**
+     * Render the canvas
+     */
+    return <canvas ref={canvasRef} width={props.width} height={props.height} />;
 };
 
 export default MyComponent;
