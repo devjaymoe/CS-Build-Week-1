@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
-const numRows = 35;
-const numCols = 60;
+const numRows = 25;
+const numCols = 45;
 
 // all the neighbors for an element
 const operations = [
@@ -135,10 +135,16 @@ function App() {
                         <div
                             key={`${i}-${k}`}
                             onClick={() => {
-                                const newGrid = produce(grid, (gridCopy) => {
-                                    gridCopy[i][k] = grid[i][k] ? 0 : 1;
-                                });
-                                setGrid(newGrid);
+                                // make tiles not clickable while running
+                                if (!running) {
+                                    const newGrid = produce(
+                                        grid,
+                                        (gridCopy) => {
+                                            gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                                        }
+                                    );
+                                    setGrid(newGrid);
+                                }
                             }}
                             style={{
                                 width: 20,
