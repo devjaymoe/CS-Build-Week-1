@@ -32,17 +32,29 @@ function App() {
 
     const [running, setRunning] = useState(false);
 
+    const [gen, setGen] = useState(0);
+
     // used in conjunction with run simulation
     // so that the state is up to date on the callback
     const runningRef = useRef(running);
     runningRef.current = running;
 
+    // generation tracker used with ref hook
+    // for the same reasons running ref is used
+    const genRef = useRef(gen);
+    genRef.current = gen;
+
     const runSimulation = useCallback(() => {
         // kill command for recursive function
         // checks running state
+
         if (!runningRef.current) {
             return;
         }
+        // generation incrementer
+        setGen((genNum) => {
+            return (genNum = genNum + 1);
+        });
 
         // param is curr val of grid
         setGrid((g) => {
@@ -117,10 +129,12 @@ function App() {
             <button
                 onClick={() => {
                     setGrid(generateEmptyGrid());
+                    setGen(0);
                 }}
             >
                 Clear
             </button>
+            <span>Current Generation: {gen}</span>
             <div
                 className="App"
                 style={{
