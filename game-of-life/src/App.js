@@ -105,6 +105,7 @@ function App() {
                         runningRef.current = true;
                         runSimulation();
                     }
+                    console.log(grid);
                 }}
             >
                 {/* checks running state and changes text */}
