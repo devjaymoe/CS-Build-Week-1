@@ -1,2 +1,16 @@
+// vars
+
+$black: #2f2519;
+$greyBlack: #4a3f35;
+$orange: #fa7d09;
+$darkOrange: #ff4301;
+$white: #f2f0eb;
+
+// font imports
+@import url("https://fonts.googleapis.com/css2?family=Krona+One&family=Roboto&display=swap");
+
+// imports
+@import "reset.scss";
 @import "global.scss";
-@import "canvas.scss";
+@import "board.scss";
+@import "controls.scss";

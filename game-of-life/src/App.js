@@ -120,84 +120,10 @@ function App() {
     };
 
     return (
-        <>
-            <div className="controls">
-                <label htmlFor="slow">Slow</label>
-                <input
-                    type="radio"
-                    id="slow"
-                    name="speed"
-                    value="slow"
-                    onChange={handleSpeed}
-                />
-                <label htmlFor="normal">Normal</label>
-                <input
-                    type="radio"
-                    id="normal"
-                    name="speed"
-                    value="normal"
-                    defaultChecked
-                    onChange={handleSpeed}
-                />
-                <label htmlFor="fast">Fast</label>
-                <input
-                    type="radio"
-                    id="fast"
-                    name="speed"
-                    value="fast"
-                    onChange={handleSpeed}
-                />
-                <button
-                    onClick={() => {
-                        // changes running state
-                        setRunning(!running);
-                        if (!running) {
-                            runningRef.current = true;
-                            runSimulation();
-                        }
-                        console.log(grid);
-                    }}
-                >
-                    {/* checks running state and changes text */}
-                    {running ? "Stop" : "Start"}
-                </button>
-                <button
-                    onClick={() => {
-                        const rows = [];
-                        for (let i = 0; i < numRows; i++) {
-                            rows.push(
-                                Array.from(Array(numCols), () =>
-                                    Math.random() > 0.8 ? 1 : 0
-                                )
-                            );
-                        }
-
-                        setGrid(rows);
-                    }}
-                >
-                    Randomize
-                </button>
-                <button
-                    onClick={() => {
-                        setGrid(generateEmptyGrid());
-                        setGen(0);
-                        setRunning(false);
-                    }}
-                >
-                    Clear
-                </button>
-                <span>Current Generation: {gen}</span>
-                <label htmlFor="presets">Presets</label>
-                <select
-                    className="presets"
-                    id="presets"
-                    onChange={handleChange}
-                >
-                    <option value="None">...</option>
-                    <option value="Hearts">Hearts</option>
-                    <option value="Penta">Penta- decathlon</option>
-                    <option value="Glider">Gosper's Glider Gun</option>
-                </select>
+        <div className="mainContainer">
+            <div className="title">
+                <h1>Conway's Game of Life</h1>
+                <p>Current Generation: {gen}</p>
             </div>
             <div
                 className="gameGrid"
@@ -228,7 +154,7 @@ function App() {
                                 width: 20,
                                 height: 20,
                                 backgroundColor: grid[i][k]
-                                    ? "pink"
+                                    ? "#fa7d09"
                                     : undefined,
                                 border: "solid 1px black",
                             }}
@@ -236,7 +162,96 @@ function App() {
                     ))
                 )}
             </div>
-        </>
+            <div className="controls">
+                <div className="speedContainer">
+                    <label htmlFor="slow">
+                        Slow
+                        <input
+                            type="radio"
+                            id="slow"
+                            name="speed"
+                            value="slow"
+                            onChange={handleSpeed}
+                        />
+                    </label>
+                    <label htmlFor="normal">
+                        Normal
+                        <input
+                            type="radio"
+                            id="normal"
+                            name="speed"
+                            value="normal"
+                            defaultChecked
+                            onChange={handleSpeed}
+                        />
+                    </label>
+                    <label htmlFor="fast">
+                        Fast
+                        <input
+                            type="radio"
+                            id="fast"
+                            name="speed"
+                            value="fast"
+                            onChange={handleSpeed}
+                        />
+                    </label>
+                </div>
+                <div className="presetContainer">
+                    <label htmlFor="presets">Presets</label>
+                    <select
+                        className="presets"
+                        id="presets"
+                        onChange={handleChange}
+                    >
+                        <option value="None">...</option>
+                        <option value="Hearts">Hearts</option>
+                        <option value="Penta">Penta- decathlon</option>
+                        <option value="Glider">Gosper's Glider Gun</option>
+                    </select>
+                </div>
+                <div className="buttonContainer">
+                    <button
+                        onClick={() => {
+                            // changes running state
+                            setRunning(!running);
+                            if (!running) {
+                                runningRef.current = true;
+                                runSimulation();
+                            }
+                            console.log(grid);
+                        }}
+                    >
+                        {/* checks running state and changes text */}
+                        {running ? "Stop" : "Start"}
+                    </button>
+                    <button
+                        onClick={() => {
+                            const rows = [];
+                            for (let i = 0; i < numRows; i++) {
+                                rows.push(
+                                    Array.from(Array(numCols), () =>
+                                        Math.random() > 0.8 ? 1 : 0
+                                    )
+                                );
+                            }
+
+                            setGrid(rows);
+                        }}
+                    >
+                        Randomize
+                    </button>
+                    <button
+                        onClick={() => {
+                            setGrid(generateEmptyGrid());
+                            setGen(0);
+                            setRunning(false);
+                        }}
+                    >
+                        Clear
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }
 
