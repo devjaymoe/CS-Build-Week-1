@@ -49,6 +49,15 @@ const speeds = {
     fast: 50,
 };
 
+const findLife = (grid) => {
+    for (let i = 0; i < grid.length; i++) {
+        let result = grid[i].find((elem) => elem === 1);
+        if (result === 1) {
+            return result;
+        }
+    }
+};
+
 function App() {
     const [grid, setGrid] = useState(() => {
         return generateEmptyGrid();
@@ -68,6 +77,9 @@ function App() {
     const speedRef = useRef(speed);
     speedRef.current = speed;
 
+    const gridRef = useRef(grid);
+    gridRef.current = grid;
+
     const runSimulation = useCallback(() => {
         // kill command for recursive function
         // checks running state
@@ -75,11 +87,18 @@ function App() {
         if (!runningRef.current) {
             return;
         }
+
+        // checking grid if there is no life
+        // stopping loop if that is the case
+        let life = findLife(gridRef.current);
+        if (life === undefined) {
+            setRunning(false);
+            return;
+        }
         // generation incrementer
         setGen((genNum) => {
             return (genNum = genNum + 1);
         });
-
         // param is curr val of grid
         setGrid((g) => {
             // new val of grid returned

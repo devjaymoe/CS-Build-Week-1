@@ -29,6 +29,7 @@
         border-radius: 3px;
         width: 145px;
         background-color: $greyBlack;
+        box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.48);
 
         label {
             display: flex;
@@ -49,6 +50,8 @@
         padding: 0 2%;
         border-radius: 3px;
         background-color: $greyBlack;
+        box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.48);
+
         select {
             border-radius: 3px;
             font-size: 0.7rem;
@@ -63,6 +66,7 @@
         padding: 1% 2%;
         border-radius: 3px;
         background-color: $greyBlack;
+        box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.48);
     }
     button {
         // display: inline-block;
