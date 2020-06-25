@@ -1,0 +1,17 @@
+.rulesContainer {
+    border-top: 25px solid $black;
+    padding: 3%;
+
+    h2 {
+        display: inline;
+        border-bottom: 2px solid $black;
+    }
+
+    p {
+        margin: 2% 0;
+    }
+
+    li {
+        margin: 1%;
+    }
+}

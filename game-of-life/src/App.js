@@ -218,7 +218,6 @@ function App() {
                                 runningRef.current = true;
                                 runSimulation();
                             }
-                            console.log(grid);
                         }}
                     >
                         {/* checks running state and changes text */}
@@ -250,6 +249,35 @@ function App() {
                         Clear
                     </button>
                 </div>
+            </div>
+            <div className="rulesContainer">
+                <h2>Rules</h2>
+                <p>
+                    The universe of the Game of Life is an infinite,
+                    two-dimensional orthogonal grid of square cells, each of
+                    which is in one of two possible states, live or dead, (or
+                    populated and unpopulated, respectively). Every cell
+                    interacts with its eight neighbours, which are the cells
+                    that are horizontally, vertically, or diagonally adjacent.
+                    At each step in time, the following transitions occur:
+                </p>
+                <ul>
+                    <li>
+                        1. Any live cell with two or three live neighbours
+                        survives.
+                    </li>
+                    <li>
+                        2. Any dead cell with three live neighbours becomes a
+                        live cell.
+                    </li>
+                    <li>
+                        3. All other live cells die in the next generation.
+                        Similarly, all other dead cells stay dead.
+                    </li>
+                </ul>
+                <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">
+                    Conway's Game of Life Wiki
+                </a>
             </div>
         </div>
     );
