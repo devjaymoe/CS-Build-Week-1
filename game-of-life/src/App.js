@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef } from "react";
 import { heartPreset } from "./presets/hearts.js";
 import { pentaPreset } from "./presets/Penta-decathlon.js";
 import { gliderGun } from "./presets/gliderGun.js";
+import { shootingStars } from "./presets/shootingstars.js";
 import produce from "immer";
 
 const numRows = 25;
@@ -41,6 +42,7 @@ const presetContainer = {
     Hearts: heartPreset,
     Penta: pentaPreset,
     Glider: gliderGun,
+    Stars: shootingStars,
 };
 
 const speeds = {
@@ -228,6 +230,7 @@ function App() {
                         <option value="Hearts">Hearts</option>
                         <option value="Penta">Penta- decathlon</option>
                         <option value="Glider">Gosper's Glider Gun</option>
+                        <option value="Stars">Shooting Stars</option>
                     </select>
                 </div>
                 <div className="buttonContainer">
