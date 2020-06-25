@@ -126,6 +126,8 @@ function App() {
 
     const handleChange = (e) => {
         let presetName = e.target.value;
+        setGen(0);
+        setRunning(false);
 
         if (presetName === "None") {
             setGrid(generateEmptyGrid());
@@ -244,6 +246,8 @@ function App() {
                     </button>
                     <button
                         onClick={() => {
+                            setGen(0);
+                            setRunning(false);
                             const rows = [];
                             for (let i = 0; i < numRows; i++) {
                                 rows.push(
