@@ -2,6 +2,8 @@ body {
     background-color: $greyBlack;
     display: flex;
     justify-content: center;
+    border-left: 50px solid $black;
+    border-right: 50px solid $black;
 }
 
 h1,
@@ -9,12 +11,12 @@ h2,
 h3,
 h4 {
     font-family: "Krona One", sans-serif;
-    color: $white;
+    color: $black;
 }
 
 p {
     font-family: "Roboto", sans-serif;
-    color: $white;
+    color: $black;
 }
 
 .mainContainer {
@@ -22,5 +24,15 @@ p {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80%;
+
+    .title {
+        margin: 2%;
+
+        p {
+            margin-top: 2%;
+            padding-bottom: 2%;
+            text-align: center;
+            border-bottom: 1px solid $orange;
+        }
+    }
 }

@@ -154,7 +154,7 @@ function App() {
                                 width: 20,
                                 height: 20,
                                 backgroundColor: grid[i][k]
-                                    ? "#fa7d09"
+                                    ? "#00adb5"
                                     : undefined,
                                 border: "solid 1px black",
                             }}
